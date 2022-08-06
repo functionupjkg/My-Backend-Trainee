@@ -17,7 +17,7 @@ let printLower = function func_lower() {
 const question2 = "my name is jyoti kumari form plutonium batch"
 let printUpper = function func_upper() {
 
-    console.log(question1.toUpperCase());
+    console.log(question2.toUpperCase());
 }
 
 // Moduler exporters name
