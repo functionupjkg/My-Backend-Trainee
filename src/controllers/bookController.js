@@ -56,23 +56,23 @@ const getPopulatedBooks = async function (req, res) {
 //a--> for the books publisher by "Penguin" and "HarperCollins" update this key to true.
 
 
-const booleanUpdate = async function(req, res) {
-    let publisherId= await publisherModel.find({$or: [{name : "Penguin"},{ name: "HarperCollins"}]}).select({_id:1})
+const booleanUpdate = async function (req, res) {
+    let publisherId = await publisherModel.find({ $or: [{ name: "Penguin" }, { name: "HarperCollins" }] }).select({ _id: 1 })
     console.log(publisherId);
-    let updateBook= await bookModel.updateMany({publisher_id: publisherId},{$set: {isHardCover: true}}, {new: true})
+    let updateBook = await bookModel.updateMany({ publisher_id: publisherId }, { $set: { isHardCover: true } }, { new: true })
     console.log(updateBook)
-    res.send({msg: updateBook.name})
+    res.send({ msg: updateBook.name })
 }
 
 
 //---------------Update Book Price+10 whose rating >=3.5 ------------------------------------
-const updatePriceValue = async function(req, res) {
+const updatePriceValue = async function (req, res) {
 
-    let authorId= await authorModel.find({rating: {$gt: 3.5}})
+    let authorId = await authorModel.find({ rating: { $gt: 3.5 } })
     console.log(authorId)
-    let updatePrice= await bookModel.updateMany({author_id: authorId},{$inc: {price: 20}}, {new:true})
-    console.log(updatePrice)   
-    res.send({msg: updatePrice})
+    let updatePrice = await bookModel.updateMany({ author_id: authorId }, { $inc: { price: 20 } }, { new: true })
+    console.log(updatePrice)
+    res.send({ msg: updatePrice })
 }
 
 
