@@ -1,23 +1,18 @@
 const express = require('express');
 const router = express.Router();
-// const UserModel= require("../models/userModel.js")
+//const commonMW = require ("../middlewares/commonMiddlewares")
+const GMid = require("../middlewares/isFreeMiddleware");
 const UserController= require("../controllers/userController")
-const BookController= require("../controllers/bookController")
-const commonMW = require ("../middlewares/commonMiddlewares")
+const ProductController = require("../controllers/productController")
+const OrderController = require ("../controllers/orderController")
+
+
 
 router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
 
 
-
-
-router.post("/createBook", BookController.createBook  )
-
-
-
-
-router.post("/createUser", UserController.createUser)
 // router.get("/getUsersData", UserController.getUsersData)
 
 
@@ -45,10 +40,32 @@ router.post("/createUser", UserController.createUser)
 // router.get('/register',  UserController.register)
 
 
+//===========Q. 1 =============== 1st API to Create userData===========================//
+
+router.post('/createUserData' , GMid.globalMiddlewares , UserController.createUserData)
+router.get('/getUserData' , UserController.getUserData)
+
+
+//==========Q. 2. ================2nd API route to create Product Data ====================//
+
+router.post('/createProductData' ,  ProductController.createProductData)
+router.get('/getProductData' , ProductController.getProductData)
+
+
+//=========================3rd API route to create Order Data with user & product id ====================//
+
+router.post('/createOrderData' , GMid.globalMiddlewares, OrderController.createOrderData)
+router.get('/getOrderData' , OrderController.getOrderData)
 
 
 
-router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
+
+
+
+
+
+
+//router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
 
 
 

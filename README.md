@@ -45,7 +45,8 @@ Your Order document looks like this.
 	productId: “61951bfa4d9fe0d34da86344”
 	amount: 0,
 	isFreeAppUser: true, 
-	date: “22/11/2021”
+	date: “22/11/2021” 
+
 }
 ```
 
