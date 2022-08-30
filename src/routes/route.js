@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userController= require("../controllers/userController")
+const userController = require("../controllers/userController")
 const jwtAuth = require("../middleware/auth")
 
 router.get("/test-me", function (req, res) {
@@ -8,16 +8,20 @@ router.get("/test-me", function (req, res) {
 })
 
 
+try {
+    router.post("/users", userController.createUser)
 
-router.post("/users", userController.createUser )
+    router.post("/login", userController.loginUser, jwtAuth.jwtAuthenticate)
 
-router.post("/login", userController.loginUser, jwtAuth.jwtAuthenticate )
+    //The userId is sent by front end
+    router.get("/users/:userId", jwtAuth.authenticate, jwtAuth.authorise, userController.getUserData)
+    router.post("/users/:userId/posts", jwtAuth.authenticate, jwtAuth.authorise, userController.postMessage)
 
-//The userId is sent by front end
-router.get("/users/:userId" , jwtAuth.authenticate, jwtAuth.authorise ,  userController.getUserData)
-router.post("/users/:userId/posts" , jwtAuth.authenticate, jwtAuth.authorise , userController.postMessage)
+    router.put("/users/:userId", jwtAuth.authenticate, jwtAuth.authorise, userController.updateUser)
+    router.delete('/users/:userId', jwtAuth.authenticate, jwtAuth.authorise, userController.deleteUser)
 
-router.put("/users/:userId" , jwtAuth.authenticate, jwtAuth.authorise , userController.updateUser)
-router.delete('/users/:userId' , jwtAuth.authenticate, jwtAuth.authorise , userController.deleteUser)
 
+} catch (error) {
+    res.status(201).send(error.message)
+}
 module.exports = router;
